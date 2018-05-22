@@ -9,7 +9,7 @@
     "start": "npm-run-all --parallel bundle serve"
   },
   "author": "tbrasington <tbrasington@gmail.com>",
-  "license": "WTFPL",
+  "license": "mit",
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
