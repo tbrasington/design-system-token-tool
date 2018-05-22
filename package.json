@@ -1,0 +1,32 @@
+{
+  "name": "hive-design-system-token-tool",
+  "version": "1.0.0",
+  "description": "Experiemental tool for generating and maintaining tokens to use in design systems.",
+  "main": "main_process.js",
+  "scripts": {
+    "bundle": "webpack --mode development",
+    "serve": "electron .",
+    "start": "npm-run-all --parallel bundle serve"
+  },
+  "author": "tbrasington <tbrasington@gmail.com>",
+  "license": "WTFPL",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^0.28.10",
+    "electron": "^1.8.2",
+    "electron-reload": "^1.2.2",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "file-loader": "^1.1.10",
+    "npm-run-all": "^4.1.2",
+    "webpack": "^4.1.1",
+    "webpack-cli": "^2.0.11"
+  },
+  "dependencies": {
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-router-dom": "^4.2.2",
+    "styled-components": "^3.2.6"
+  }
+}
