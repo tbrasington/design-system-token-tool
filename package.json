@@ -1,5 +1,5 @@
 {
-  "name": "hive-design-system-token-tool",
+  "name": "design-system-token-tool",
   "version": "1.0.0",
   "description": "Experiemental tool for generating and maintaining tokens to use in design systems.",
   "main": "main_process.js",
