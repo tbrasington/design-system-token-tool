@@ -1,4 +1,4 @@
-# hive-design-system-token-tool
+# design-system-token-tool
 
 Exploring what could be done with a tool to manage tokens for use in design systems. Particularly react-sketchapp.
 
