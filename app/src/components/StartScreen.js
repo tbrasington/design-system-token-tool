@@ -12,7 +12,8 @@ class StartScreen extends Component {
         super(props)
     }
     openProject() {
-     let files =  dialog.showOpenDialog({
+        
+        let files = dialog.showOpenDialog({
           properties: ['openFile'], 
           filters: [
             {
@@ -21,10 +22,13 @@ class StartScreen extends Component {
             }]
         });
 
-      this.props.loadData(files)
+      this.props.loadData(files[0])
     }
 
     render() {
+        const {projectOpen } = this.props;
+
+        console.log(projectOpen)
         return ( 
           <Container>
             <Heading>Design System Token Tool</Heading>
@@ -40,7 +44,7 @@ class StartScreen extends Component {
 
 export default props => (
   <ProjectContext.Consumer>
-     {({ loadData}) => ( <StartScreen {...props} loadData={loadData}   /> )}
+     {({ loadData,projectData,projectOpen}) => ( <StartScreen {...props} loadData={loadData} projectData={projectData} projectOpen={projectOpen}   /> )}
   </ProjectContext.Consumer>
 );
 

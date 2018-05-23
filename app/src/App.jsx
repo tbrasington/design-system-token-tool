@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import {render} from 'react-dom'
 import { HashRouter , Route, Switch } from 'react-router-dom'
+import fs from 'fs'
 import styled from 'styled-components'
-
 import {colours } from './DesignSystem'
 
 import {ProjectContext} from './ProjectContext';
@@ -21,19 +21,28 @@ class App extends Component {
   constructor(props){
     super(props)
  
+    const self = this;
 
     this.loadData = (files) => {
-      console.log('toggled theme')
-      console.log(files)
-      this.setState(state => ({
-        projectData: 'foo'
-      }));
+      fs.readFile(files, 'utf8', function (err,data) {
+          
+          if (err) {
+            // todo ; build a notification component
+            return console.log(err);
+          }
+
+          self.setState(state => ({
+            projectData: JSON.parse(data),
+            projectOpen:true
+          }));
+      });
     };
 
     // State also contains the updater function so it will
     // be passed down into the context provider
     this.state = {
       projectData: {},
+      projectOpen:false,
       loadData: this.loadData,
     };
   }
