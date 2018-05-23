@@ -40,4 +40,5 @@ jspm_packages
 .node_repl_history
 
 # build
-app/bulld
+app/bulld/bundle.js
+app/bulld/bundle.css

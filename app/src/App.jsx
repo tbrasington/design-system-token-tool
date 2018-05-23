@@ -5,6 +5,7 @@ import styled from 'styled-components'
 
 import {colours } from './DesignSystem'
 
+import {ProjectContext} from './ProjectContext';
 import StartScreen from './components/StartScreen'
 
 const routes = [
@@ -17,14 +18,35 @@ const routes = [
 ]
 
 class App extends Component {
+  constructor(props){
+    super(props)
+ 
+
+    this.loadData = (files) => {
+      console.log('toggled theme')
+      console.log(files)
+      this.setState(state => ({
+        projectData: 'foo'
+      }));
+    };
+
+    // State also contains the updater function so it will
+    // be passed down into the context provider
+    this.state = {
+      projectData: {},
+      loadData: this.loadData,
+    };
+  }
   render() {
     return (
       <HashRouter>
         <Switch>
-        <Container>
-          <TitleBar/>
-          {routes.map((route, i) => <Route key={i} {...route} />)}
-          </Container>
+          <ProjectContext.Provider value={this.state}>
+              <Container>
+                <TitleBar/>
+                {routes.map((route, i) => <Route key={i} {...route} />)}
+              </Container>
+          </ProjectContext.Provider>
         </Switch>
       </HashRouter>
     )

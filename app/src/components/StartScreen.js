@@ -1,35 +1,48 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
 import {layout_marginTop, layout_marginLeft, layout_marginRight, typeStyles, colours, spacing } from '../DesignSystem'
+import {ProjectContext} from '../ProjectContext';
+
 import Action from './Action'
 
 const {dialog} = require('electron').remote
 
-export default class StartScreen extends Component {
-
+class StartScreen extends Component {
+    constructor(props){
+        super(props)
+    }
     openProject() {
-      dialog.showOpenDialog({
+     let files =  dialog.showOpenDialog({
           properties: ['openFile'], 
           filters: [
             {
                 name: 'json', 
                 extensions: ['json']
-            }
-        ]});
+            }]
+        });
 
+      this.props.loadData(files)
     }
+
     render() {
-        return (
+        return ( 
           <Container>
             <Heading>Design System Token Tool</Heading>
             <Actions>
                 <Action>New Project</Action>
-                <Action clickEvent={this.openProject} showRule={false}>Open Project</Action>
+                <Action clickEvent={this.openProject.bind(this)} showRule={false}>Open Project</Action>
             </Actions>
           </Container>
         )
     }
 }
+
+
+export default props => (
+  <ProjectContext.Consumer>
+     {({ loadData}) => ( <StartScreen {...props} loadData={loadData}   /> )}
+  </ProjectContext.Consumer>
+);
 
 const Container = styled.div`
 padding-top: ${layout_marginTop}px;
