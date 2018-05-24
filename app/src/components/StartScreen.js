@@ -8,9 +8,7 @@ import Action from './Action'
 const {dialog} = require('electron').remote
 
 class StartScreen extends Component {
-    constructor(props){
-        super(props)
-    }
+ 
     openProject() {
         
         let files = dialog.showOpenDialog({
@@ -21,21 +19,31 @@ class StartScreen extends Component {
                 extensions: ['json']
             }]
         });
+    
+        // load new file in
+        this.props.loadData(files[0],()=>{this.props.history.push('/project')})
+    }
 
-      this.props.loadData(files[0])
+    componentDidMount(){
+        console.log(this.props.projectOpen)
+        if(this.props.projectOpen) {
+            this.props.history.push('/project')
+        }
     }
 
     render() {
-        const {projectOpen } = this.props;
-
-        console.log(projectOpen)
+        const {projectOpen,projectData } = this.props;
         return ( 
           <Container>
             <Heading>Design System Token Tool</Heading>
+            
             <Actions>
+           
                 <Action>New Project</Action>
                 <Action clickEvent={this.openProject.bind(this)} showRule={false}>Open Project</Action>
+
             </Actions>
+
           </Container>
         )
     }
@@ -63,3 +71,4 @@ color:${colours.lightGrey};
 const Actions = styled.div`
 padding-top:${spacing*12}px;
 `
+ 

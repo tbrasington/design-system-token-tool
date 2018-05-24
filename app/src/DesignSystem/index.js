@@ -54,6 +54,14 @@ export const typeStyles = {
         lineHeight: `${msSettings(1)}px`,
         letterSpacing: `0.04em`,
         fontWeight: 300
+    },
+    label6: {
+        fontFamily:SystemFont,
+        fontSize: `${msSettings(0)}px`,
+        lineHeight: `${msSettings(1)}px`,
+        fontStyle: 'italic',
+        letterSpacing: `0.04em`,
+        fontWeight: 300
     }
 }
 

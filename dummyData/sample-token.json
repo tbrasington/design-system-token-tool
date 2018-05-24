@@ -1,5 +1,8 @@
 {
     "name": "token-design-system",
     "version": "1.0.0",
-    "description": "Experiemental tool for generating and maintaining tokens to use in design systems."
+    "description": "Experiemental tool for generating and maintaining tokens to use in design systems.",
+    "tokens" : {
+
+    }
 }

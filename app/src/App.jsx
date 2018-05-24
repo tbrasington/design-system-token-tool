@@ -1,12 +1,18 @@
 import React, {Component} from 'react'
 import {render} from 'react-dom'
-import { HashRouter , Route, Switch } from 'react-router-dom'
+import { MemoryRouter , Route, Switch } from 'react-router-dom'
 import fs from 'fs'
+import Store from 'electron-store';
 import styled from 'styled-components'
 import {colours } from './DesignSystem'
 
 import {ProjectContext} from './ProjectContext';
 import StartScreen from './components/StartScreen'
+import Project from './components/Project'
+
+
+const store = new Store();
+
 
 const routes = [
   {
@@ -14,8 +20,20 @@ const routes = [
     path: '/',
     component: StartScreen,
     exact:true
+  },{
+    title: 'Home',
+    path: '/home',
+    component: StartScreen,
+    exact:true
+  },
+  {
+    title: 'Project',
+    path: '/project',
+    component: Project,
+    exact:true
   }
 ]
+
 
 class App extends Component {
   constructor(props){
@@ -23,32 +41,60 @@ class App extends Component {
  
     const self = this;
 
-    this.loadData = (files) => {
+    this.loadData = (files, callback) => {
       fs.readFile(files, 'utf8', function (err,data) {
           
           if (err) {
             // todo ; build a notification component
             return console.log(err);
           }
-
+          // update the state
           self.setState(state => ({
             projectData: JSON.parse(data),
-            projectOpen:true
-          }));
+            projectOpen:true,
+            projectFile : files
+          }), callback());
+          // update the local store
+          store.set({
+            projectData : JSON.parse(data),
+            projectOpen : true,
+            projectFile : files
+          });
       });
     };
+
+    this.closeProject = () => {
+      self.setState(state => ({
+            projectData: {},
+            projectOpen:false,
+            projectFile : ''
+          }));
+          // update the local store
+          store.set({
+            projectData: {},
+            projectOpen:false,
+            projectFile : ''
+          });
+    }
 
     // State also contains the updater function so it will
     // be passed down into the context provider
     this.state = {
-      projectData: {},
-      projectOpen:false,
+      projectData:store.get('projectData')|| {},
+      projectOpen:store.get('projectOpen') || false ,
+      projectFile:store.get('projectFile') || '' ,
       loadData: this.loadData,
+      closeProject : this.closeProject
     };
+
   }
+
+ 
   render() {
+ 
     return (
-      <HashRouter>
+      //initialEntries={[( this.state.projectOpen ? '/project': '/')]} 
+      <MemoryRouter >
         <Switch>
           <ProjectContext.Provider value={this.state}>
               <Container>
@@ -57,7 +103,7 @@ class App extends Component {
               </Container>
           </ProjectContext.Provider>
         </Switch>
-      </HashRouter>
+      </MemoryRouter>
     )
   }
 }
