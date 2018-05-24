@@ -10,7 +10,7 @@ class Project extends Component {
    
     getTokens(tokenData) {
         return tokenData.map(token=> {
-            return <ListItem>{token.name}</ListItem>
+            return <ListItem key={String(token.id)}>{token.name}</ListItem>
         })
     }
 
@@ -51,11 +51,19 @@ color:${colours.lightGrey};
 `
 
 const Actions = styled.div`
-padding-top:${spacing*12}px;
+padding-top:${spacing*2}px;
 `
 const List = styled.ul`
+list-style:none;
+padding:0;
+margin:0 0 ${spacing*3}px 0;
 `
-const ListItem = styled.li ``
+const ListItem = styled.li `
+${typeStyles.label1};
+color:${colours.midGrey};
+padding:0 0 ${spacing}px 0;
+margin:0 0 ${spacing}px 0;
+`
 Project.defaultProps = {
     sectionTitle : 'Project Title'
 }

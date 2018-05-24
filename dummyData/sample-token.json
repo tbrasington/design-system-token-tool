@@ -2,7 +2,21 @@
     "name": "token-design-system",
     "version": "1.0.0",
     "description": "Experiemental tool for generating and maintaining tokens to use in design systems.",
-    "tokens" : {
-
-    }
+    "tokens" : [
+        {
+            "name": "Typography",
+            "type" : "typography",
+            "id" : 1
+        },
+        {
+            "name": "Colours",
+            "type" : "colours",
+            "id" :2
+        },
+        {
+            "name": "Layout",
+            "type" : "layout",
+            "id" : 3
+        }
+    ]
 }

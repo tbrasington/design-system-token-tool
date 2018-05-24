@@ -62,7 +62,7 @@ class App extends Component {
           });
       });
     };
-
+    // closes the project
     this.closeProject = () => {
       self.setState(state => ({
             projectData: {},
@@ -93,8 +93,7 @@ class App extends Component {
   render() {
  
     return (
-      //initialEntries={[( this.state.projectOpen ? '/project': '/')]} 
-      <MemoryRouter >
+      <MemoryRouter initialEntries={[( this.state.projectOpen ? '/project': '/')]} >
         <Switch>
           <ProjectContext.Provider value={this.state}>
               <Container>

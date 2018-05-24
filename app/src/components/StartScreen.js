@@ -25,10 +25,10 @@ class StartScreen extends Component {
     }
 
     componentDidMount(){
-        console.log(this.props.projectOpen)
-        if(this.props.projectOpen) {
-            this.props.history.push('/project')
-        }
+        // console.log(this.props.projectOpen)
+        // if(this.props.projectOpen) {
+        //     this.props.history.push('/project')
+        // }
     }
 
     render() {
