@@ -9,7 +9,7 @@ import {colours } from './DesignSystem'
 import {ProjectContext} from './ProjectContext';
 import StartScreen from './components/StartScreen'
 import Project from './components/Project'
-import Style from './components/Style'
+import Token from './components/Token'
 
 
 const store = new Store();
@@ -34,9 +34,9 @@ const routes = [
     exact:true
   },
   {
-    title: 'Style',
-    path: '/Style',
-    component: Style,
+    title: 'Token',
+    path: '/Token',
+    component: Token,
     exact:true
   }
 ]
@@ -72,23 +72,32 @@ class App extends Component {
     // closes the project
     this.closeProject = () => {
       self.setState(state => ({
-            projectData: {},
+            projectData: null,
             projectOpen:false,
             projectFile : ''
           }));
           // update the local store
           store.set({
-            projectData: {},
+            projectData: null,
             projectOpen:false,
             projectFile : ''
           });
     }
 
-    this.openToken = () => {
+    this.openToken = (data,callback) => {
       
+      this.setState(state => ({
+        tokenData : data
+      }), callback());
+
+      store.set({
+        tokenData : data
+      })
     }
-    this.closeToken = () => {
-      
+    this.closeToken = (callback) => {
+      this.setState(state => ({
+        tokenData : null
+      }));
     }
     this.openStyle = () => {
       
@@ -100,9 +109,11 @@ class App extends Component {
     // State also contains the updater function so it will
     // be passed down into the context provider
     this.state = {
-      projectData:store.get('projectData')|| {},
+      projectData:store.get('projectData')|| null,
       projectOpen:store.get('projectOpen') || false ,
       projectFile:store.get('projectFile') || '' ,
+      tokenData: store.get('tokenData') || null,
+      styleData : store.get('styleData') || null,
       openProject: this.openProject,
       closeProject : this.closeProject,
       openToken : this.openToken,
@@ -113,11 +124,19 @@ class App extends Component {
 
   }
 
+  handlePersistance() {
+    if(store.get('tokenData')!==null) {
+      return '/token'
+    } if(store.get('projectData')!==null) {
+      return '/project'
+    }
+    return '/'
+  }
  
   render() {
  
     return (
-      <MemoryRouter initialEntries={[( this.state.projectOpen ? '/project': '/')]} >
+      <MemoryRouter initialEntries={[this.handlePersistance()]} >
         <Switch>
           <ProjectContext.Provider value={this.state}>
               <Container>

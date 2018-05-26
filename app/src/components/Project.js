@@ -5,22 +5,18 @@ import {ProjectContext} from '../ProjectContext';
 
 import Action from './Action'
 import BackButton from './BackButton'
-
+import SideList from './SideList'
 class Project extends Component {
    
-    getTokens(tokenData) {
-        let tokenList = [];
-        
-        Object.entries(tokenData).forEach(([key, token]) => {
-            tokenList.push (<ListItem key={String(key)} onClick={this.goToStyle(token)}>{token.name}</ListItem>)
-        });
 
-        return tokenList;
-    }
 
-    goToStyle(tokenData){
+    goToToken(itemData){
         // function on app
         //this.
+        console.log("go to token")
+        console.log(itemData)
+
+        this.props.openToken(itemData,()=>{this.props.history.push('/token')})
     }
 
     render() {
@@ -33,7 +29,7 @@ class Project extends Component {
             <Heading>{projectData.name}</Heading>
             <BackButton clickEvent={()=> { this.props.history.push('/'); closeProject(); }}/>
             <Actions>
-                <List>{projectData.tokens && this.getTokens(projectData.tokens)}</List>
+                <SideList items={projectData.tokens} eventHandler={this.goToToken.bind(this)}/>
                 <Action>Add Token</Action>
                 <Action showRule={false}>Render</Action>
             </Actions>
@@ -46,7 +42,7 @@ class Project extends Component {
 
 export default props => (
   <ProjectContext.Consumer>
-     {({ closeProject,projectData,projectOpen}) => ( <Project {...props} closeProject={closeProject} projectData={projectData} projectOpen={projectOpen}   /> )}
+     {({ closeProject,projectData,projectOpen, openToken}) => ( <Project {...props} closeProject={closeProject} projectData={projectData} projectOpen={projectOpen} openToken={openToken}  /> )}
   </ProjectContext.Consumer>
 );
 
@@ -65,17 +61,7 @@ color:${colours.lightGrey};
 const Actions = styled.div`
 padding-top:${spacing*2}px;
 `
-const List = styled.ul`
-list-style:none;
-padding:0;
-margin:0 0 ${spacing*3}px 0;
-`
-const ListItem = styled.li `
-${typeStyles.label1};
-color:${colours.midGrey};
-padding:0 0 ${spacing}px 0;
-margin:0 0 ${spacing}px 0;
-`
+
 Project.defaultProps = {
     sectionTitle : 'Project Title'
 }
