@@ -9,6 +9,7 @@ import {colours } from './DesignSystem'
 import {ProjectContext} from './ProjectContext';
 import StartScreen from './components/StartScreen'
 import Project from './components/Project'
+import Style from './components/Style'
 
 
 const store = new Store();
@@ -31,6 +32,12 @@ const routes = [
     path: '/project',
     component: Project,
     exact:true
+  },
+  {
+    title: 'Style',
+    path: '/Style',
+    component: Style,
+    exact:true
   }
 ]
 
@@ -41,7 +48,7 @@ class App extends Component {
  
     const self = this;
 
-    this.loadData = (files, callback) => {
+    this.openProject = (files, callback) => {
       fs.readFile(files, 'utf8', function (err,data) {
           
           if (err) {
@@ -77,14 +84,31 @@ class App extends Component {
           });
     }
 
+    this.openToken = () => {
+      
+    }
+    this.closeToken = () => {
+      
+    }
+    this.openStyle = () => {
+      
+    }
+    this.closeStyle = () => {
+      
+    }
+
     // State also contains the updater function so it will
     // be passed down into the context provider
     this.state = {
       projectData:store.get('projectData')|| {},
       projectOpen:store.get('projectOpen') || false ,
       projectFile:store.get('projectFile') || '' ,
-      loadData: this.loadData,
-      closeProject : this.closeProject
+      openProject: this.openProject,
+      closeProject : this.closeProject,
+      openToken : this.openToken,
+      closeToken : this.closeToken,
+      openStyle : this.openStyle,
+      closeStyle : this.closeStyle
     };
 
   }

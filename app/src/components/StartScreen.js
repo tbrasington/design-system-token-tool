@@ -20,8 +20,8 @@ class StartScreen extends Component {
             }]
         });
     
-        // load new file in
-        this.props.loadData(files[0],()=>{this.props.history.push('/project')})
+        // load new file in and send a callback to navigate to the project page
+        this.props.openProject(files[0],()=>{this.props.history.push('/project')})
     }
 
     componentDidMount(){
@@ -52,7 +52,7 @@ class StartScreen extends Component {
 
 export default props => (
   <ProjectContext.Consumer>
-     {({ loadData,projectData,projectOpen}) => ( <StartScreen {...props} loadData={loadData} projectData={projectData} projectOpen={projectOpen}   /> )}
+     {({ openProject,projectData,projectOpen}) => ( <StartScreen {...props} openProject={openProject} projectData={projectData} projectOpen={projectOpen}   /> )}
   </ProjectContext.Consumer>
 );
 

@@ -8,23 +8,18 @@ import BackButton from './BackButton'
 
 class Project extends Component {
    
-    getTokens(tokenData) {
+    getStyles(tokenData) {
         let tokenList = [];
         
         Object.entries(tokenData).forEach(([key, token]) => {
-            tokenList.push (<ListItem key={String(key)} onClick={this.goToStyle(token)}>{token.name}</ListItem>)
+            tokenList.push (<ListItem key={String(key)}>{token.name}</ListItem>)
         });
 
         return tokenList;
     }
 
-    goToStyle(tokenData){
-        // function on app
-        //this.
-    }
-
     render() {
-        const {projectOpen,projectData,closeProject } = this.props;
+        const {projectData } = this.props;
 
         console.log(projectData);
         
@@ -33,9 +28,8 @@ class Project extends Component {
             <Heading>{projectData.name}</Heading>
             <BackButton clickEvent={()=> { this.props.history.push('/'); closeProject(); }}/>
             <Actions>
-                <List>{projectData.tokens && this.getTokens(projectData.tokens)}</List>
-                <Action>Add Token</Action>
-                <Action showRule={false}>Render</Action>
+                <List>{projectData.tokens && this.getStyles(projectData.tokens)}</List>
+                <Action>Add Style</Action>
             </Actions>
 
           </Container>
@@ -46,7 +40,7 @@ class Project extends Component {
 
 export default props => (
   <ProjectContext.Consumer>
-     {({ closeProject,projectData,projectOpen}) => ( <Project {...props} closeProject={closeProject} projectData={projectData} projectOpen={projectOpen}   /> )}
+     {({ projectData}) => ( <Style {...props} projectData={projectData}  /> )}
   </ProjectContext.Consumer>
 );
 
