@@ -1,9 +1,10 @@
 import React from 'react'
 export const ProjectContext = React.createContext({
   projectData: {},
+  projectIsOpen: false,
   openProject: () => {},
   closeProject: () => {},
-  openToke: () => {},
+  openToken: () => {},
   closeToken: () => {},
   openStyle: () => {},
   closeStyle: () => {},

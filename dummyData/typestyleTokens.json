@@ -1,0 +1,31 @@
+{
+    "name": "Heading",
+    "description": "For page titles when you need to make an impact in editorial sections",
+    "styles": {
+        "fontFamily": "Helvetica",
+        "fontSize": "32px",
+        "lineHeight": "40px",
+        "fontWeight": "normal"
+    },
+    "breakpoints_adjustments": [
+        {
+            "name": "bp2",
+            "styles": {
+                "fontSize": "60px",
+                "lineHeight": "58px"
+            }
+        },
+        {
+            "name": "bp3",
+            "styles": {
+                "fontSize": "90px",
+                "lineHeight": "84px"
+            }
+        }
+    ],
+    "alignments": [
+        "left",
+        "center",
+        "right"
+    ]
+}

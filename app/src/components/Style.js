@@ -18,6 +18,7 @@ class Project extends Component {
         return tokenList;
     }
 
+ 
     render() {
         const {projectData } = this.props;
 

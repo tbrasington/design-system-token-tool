@@ -9,6 +9,7 @@ import {colours } from './DesignSystem'
 import {ProjectContext} from './ProjectContext';
 import StartScreen from './components/StartScreen'
 import Project from './components/Project'
+import Style from './components/Style'
 import Token from './components/Token'
 
 
@@ -38,7 +39,13 @@ const routes = [
     path: '/Token',
     component: Token,
     exact:true
-  }
+  },
+  {
+    title: 'Style',
+    path: '/Style',
+    component: Style,
+    exact:true
+  },
 ]
 
 
@@ -49,22 +56,27 @@ class App extends Component {
     const self = this;
 
     this.openProject = (files, callback) => {
+
       fs.readFile(files, 'utf8', function (err,data) {
           
           if (err) {
             // todo ; build a notification component
             return console.log(err);
           }
+
+          console.info('open project',JSON.parse(data))
+      
           // update the state
           self.setState(state => ({
             projectData: JSON.parse(data),
-            projectOpen:true,
+            projectIsOpen:true,
             projectFile : files
           }), callback());
+          
           // update the local store
           store.set({
             projectData : JSON.parse(data),
-            projectOpen : true,
+            projectIsOpen : true,
             projectFile : files
           });
       });
@@ -73,13 +85,13 @@ class App extends Component {
     this.closeProject = () => {
       self.setState(state => ({
             projectData: null,
-            projectOpen:false,
+            projectIsOpen:false,
             projectFile : ''
           }));
           // update the local store
           store.set({
             projectData: null,
-            projectOpen:false,
+            projectIsOpen:false,
             projectFile : ''
           });
     }
@@ -100,7 +112,7 @@ class App extends Component {
       }));
     }
     this.openStyle = () => {
-      
+     
     }
     this.closeStyle = () => {
       
@@ -110,7 +122,7 @@ class App extends Component {
     // be passed down into the context provider
     this.state = {
       projectData:store.get('projectData')|| null,
-      projectOpen:store.get('projectOpen') || false ,
+      projectIsOpen:store.get('projectIsOpen') || false ,
       projectFile:store.get('projectFile') || '' ,
       tokenData: store.get('tokenData') || null,
       styleData : store.get('styleData') || null,
@@ -124,13 +136,18 @@ class App extends Component {
 
   }
 
-  handlePersistance() {
-    if(store.get('tokenData')!==null) {
+  handlePersistance() {      
+
+    console.log(store.get('projectData'))
+    console.log(store.get('tokenData'))
+    //return '/'
+    if(store.get('projectData')!==null && store.get('tokenData')!==null) {
       return '/token'
     } if(store.get('projectData')!==null) {
       return '/project'
     }
     return '/'
+  
   }
  
   render() {

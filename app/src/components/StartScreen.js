@@ -19,20 +19,21 @@ class StartScreen extends Component {
                 extensions: ['json']
             }]
         });
+
     
         // load new file in and send a callback to navigate to the project page
         this.props.openProject(files[0],()=>{this.props.history.push('/project')})
     }
 
     componentDidMount(){
-        // console.log(this.props.projectOpen)
-        // if(this.props.projectOpen) {
+        // console.log(this.props.projectIsOpen)
+        // if(this.props.projectIsOpen) {
         //     this.props.history.push('/project')
         // }
     }
 
     render() {
-        const {projectOpen,projectData } = this.props;
+        const {projectIsOpen,projectData } = this.props;
         return ( 
           <Container>
             <Heading>Design System Token Tool</Heading>
@@ -52,7 +53,7 @@ class StartScreen extends Component {
 
 export default props => (
   <ProjectContext.Consumer>
-     {({ openProject,projectData,projectOpen}) => ( <StartScreen {...props} openProject={openProject} projectData={projectData} projectOpen={projectOpen}   /> )}
+     {({ openProject,projectData,projectIsOpen}) => ( <StartScreen {...props} openProject={openProject} projectData={projectData} projectIsOpen={projectIsOpen}   /> )}
   </ProjectContext.Consumer>
 );
 

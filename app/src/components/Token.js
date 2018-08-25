@@ -9,10 +9,13 @@ import SideList from './SideList'
 
 class Token extends Component {
    
-    goToStyle(){
+  goToStyle(){
 
-    }
- 
+  }
+  addStyle(){
+    console.log('f')
+  }
+
     render() {
         const {tokenData,closeToken } = this.props;
 
@@ -24,7 +27,7 @@ class Token extends Component {
             <BackButton clickEvent={()=> { this.props.history.push('/project'); closeToken(); }}/>
             <Actions>
             <SideList items={tokenData.data.styles} eventHandler={this.goToStyle.bind(this)}/>
-                <Action>Add Style</Action>
+                <Action  clickEvent={this.addStyle.bind(this)}>Add Styles</Action>
             </Actions>
 
           </Container>

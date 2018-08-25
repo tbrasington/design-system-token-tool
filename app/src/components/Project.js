@@ -20,9 +20,8 @@ class Project extends Component {
     }
 
     render() {
-        const {projectOpen,projectData,closeProject } = this.props;
 
-        console.log(projectData);
+        const {projectData,closeProject } = this.props;
         
         return ( 
           <Container>
@@ -30,7 +29,6 @@ class Project extends Component {
             <BackButton clickEvent={()=> { this.props.history.push('/'); closeProject(); }}/>
             <Actions>
                 <SideList items={projectData.tokens} eventHandler={this.goToToken.bind(this)}/>
-                <Action>Add Token</Action>
                 <Action showRule={false}>Render</Action>
             </Actions>
 
@@ -42,7 +40,7 @@ class Project extends Component {
 
 export default props => (
   <ProjectContext.Consumer>
-     {({ closeProject,projectData,projectOpen, openToken}) => ( <Project {...props} closeProject={closeProject} projectData={projectData} projectOpen={projectOpen} openToken={openToken}  /> )}
+     {({ closeProject,projectData,openToken}) => ( <Project {...props} closeProject={closeProject} projectData={projectData} openToken={openToken}  /> )}
   </ProjectContext.Consumer>
 );
 
