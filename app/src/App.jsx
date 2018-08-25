@@ -1,8 +1,7 @@
 import React, {Component} from 'react'
-import {render} from 'react-dom'
+import Store from 'electron-store';
 import { MemoryRouter , Route, Switch } from 'react-router-dom'
 import fs from 'fs'
-import Store from 'electron-store';
 import styled from 'styled-components'
 import {colours } from './DesignSystem'
 
@@ -52,71 +51,16 @@ const routes = [
 class App extends Component {
   constructor(props){
     super(props)
- 
-    const self = this;
+    
 
-    this.openProject = (files, callback) => {
 
-      fs.readFile(files, 'utf8', function (err,data) {
-          
-          if (err) {
-            // todo ; build a notification component
-            return console.log(err);
-          }
-
-          console.info('open project',JSON.parse(data))
-      
-          // update the state
-          self.setState(state => ({
-            projectData: JSON.parse(data),
-            projectIsOpen:true,
-            projectFile : files
-          }), callback());
-          
-          // update the local store
-          store.set({
-            projectData : JSON.parse(data),
-            projectIsOpen : true,
-            projectFile : files
-          });
-      });
-    };
-    // closes the project
-    this.closeProject = () => {
-      self.setState(state => ({
-            projectData: null,
-            projectIsOpen:false,
-            projectFile : ''
-          }));
-          // update the local store
-          store.set({
-            projectData: null,
-            projectIsOpen:false,
-            projectFile : ''
-          });
-    }
-
-    this.openToken = (data,callback) => {
-      
-      this.setState(state => ({
-        tokenData : data
-      }), callback());
-
-      store.set({
-        tokenData : data
-      })
-    }
-    this.closeToken = (callback) => {
-      this.setState(state => ({
-        tokenData : null
-      }));
-    }
-    this.openStyle = () => {
-     
-    }
-    this.closeStyle = () => {
-      
-    }
+  this.openProject = this.openProject.bind(this)
+  this.closeProject = this.closeProject.bind(this)
+  this.openToken = this.openToken.bind(this)
+  this.closeToken = this.closeToken.bind(this)
+  this.openToken = this.openToken.bind(this)
+  this.openStyle = this.openStyle.bind(this)
+  this.closeStyle = this.closeStyle.bind(this)
 
     // State also contains the updater function so it will
     // be passed down into the context provider
@@ -132,8 +76,78 @@ class App extends Component {
       closeToken : this.closeToken,
       openStyle : this.openStyle,
       closeStyle : this.closeStyle
-    };
+    }
+  }
 
+
+
+  openProject(files, callback) {
+    let that = this;
+
+    fs.readFile(files, 'utf8', function (err,data) {
+        
+      if (err) {
+        console.log(err);
+      }
+      that.setState(({
+        projectData: JSON.parse(data),
+        projectIsOpen:true,
+        projectFile : files
+      }), ()=> {callback()});
+
+        //   // update the local store
+     store.set({
+       projectData : JSON.parse(data),
+       projectIsOpen : true,
+       projectFile : files
+   });
+
+    });
+
+
+  //   // update the state
+
+
+    
+
+}
+
+  // closes the project
+  closeProject() {
+    this.setState(state => ({
+          projectData: null,
+          projectIsOpen:false,
+          projectFile : ''
+        }));
+        // update the local store
+        store.set({
+          projectData: null,
+          projectIsOpen:false,
+          projectFile : ''
+        });
+  }
+
+  openToken(data,callback)  {
+    
+    this.setState(state => ({
+      tokenData : data
+    }), callback());
+
+    store.set({
+      tokenData : data
+    })
+  }
+  
+  closeToken(callback)  {
+    this.setState(state => ({
+      tokenData : null
+    }));
+  }
+  openStyle(){
+   
+  }
+  closeStyle()  {
+    
   }
 
   handlePersistance() {      
